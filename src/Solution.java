@@ -1039,6 +1039,30 @@ public class Solution {
     }
 
     /**
+     * 647. 回文子串
+     * @param s
+     * @return
+     */
+    public int countSubstrings(String s) {
+        int count = s.length();
+        for (int i = 1; i < s.length() - 1; ++i) {
+            int j = 1;
+            while (i - j >= 0 && i + j < s.length() && s.charAt(i - j) == s.charAt(i + j)) {
+                ++count;
+                ++j;
+            }
+        }
+        for (int i = 1; i < s.length(); ++i) {
+            int j = 0;
+            while (i - 1 - j >= 0 && i + j < s.length() && s.charAt(i - 1 - j) == s.charAt(i + j)) {
+                ++count;
+                ++j;
+            }
+        }
+        return count;
+    }
+
+    /**
      * 662. 二叉树最大宽度
      * @param root
      * @return
