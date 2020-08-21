@@ -586,6 +586,20 @@ public class Solution {
     }
 
     /**
+     * 111. 二叉树的最小深度
+     * @param root
+     * @return
+     */
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int d1 = minDepth(root.left);
+        int d2 = minDepth(root.right);
+        return root.left == null || root.right == null ? d1 + d2 + 1 : Math.min(d1, d2) + 1;
+    }
+
+    /**
      * 112. 路径总和
      * @param root
      * @param sum
