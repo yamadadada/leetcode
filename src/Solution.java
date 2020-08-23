@@ -586,6 +586,20 @@ public class Solution {
     }
 
     /**
+     * 111. 二叉树的最小深度
+     * @param root
+     * @return
+     */
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int d1 = minDepth(root.left);
+        int d2 = minDepth(root.right);
+        return root.left == null || root.right == null ? d1 + d2 + 1 : Math.min(d1, d2) + 1;
+    }
+
+    /**
      * 112. 路径总和
      * @param root
      * @param sum
@@ -931,6 +945,70 @@ public class Solution {
     }
 
     /**
+     * 529. 扫雷游戏
+     * @param board
+     * @param click
+     * @return
+     */
+    public char[][] updateBoard(char[][] board, int[] click) {
+        if (board[click[0]][click[1]] == 'M') {
+            board[click[0]][click[1]] = 'X';
+            return board;
+        }
+        // 如果挖出的是E
+        int count = 0;
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
+                if (isMine(board, click[0] + i, click[1] + j)) {
+                    ++count;
+                }
+            }
+        }
+        if (count == 0) {
+            board[click[0]][click[1]] = 'B';
+        } else {
+            // ASCII 48 为 ‘0’
+            board[click[0]][click[1]] = (char)(count + 48);
+        }
+        // 递归开挖E，只有为空方块的时候才向四周开挖
+        if (board[click[0]][click[1]] == 'B') {
+            if (click[0] - 1 >= 0 && board[click[0] - 1][click[1]] == 'E') {
+                updateBoard(board, new int[]{click[0] - 1, click[1]});
+            }
+            if (click[0] + 1 < board.length && board[click[0] + 1][click[1]] == 'E') {
+                updateBoard(board, new int[]{click[0] + 1, click[1]});
+            }
+            if (click[1] - 1 >= 0 && board[click[0]][click[1] - 1] == 'E') {
+                updateBoard(board, new int[]{click[0], click[1] - 1});
+            }
+            if (click[1] + 1 < board[0].length && board[click[0]][click[1] + 1] == 'E') {
+                updateBoard(board, new int[]{click[0], click[1] + 1});
+            }
+            if (click[0] - 1 >= 0 && click[1] - 1 >= 0 && board[click[0] - 1][click[1] - 1] == 'E') {
+                updateBoard(board, new int[]{click[0] - 1, click[1] - 1});
+            }
+            if (click[0] - 1 >= 0 && click[1] + 1 < board[0].length && board[click[0] - 1][click[1] + 1] == 'E') {
+                updateBoard(board, new int[]{click[0] - 1, click[1] + 1});
+            }
+            if (click[0] + 1 < board.length && click[1] - 1 >= 0 && board[click[0] + 1][click[1] - 1] == 'E') {
+                updateBoard(board, new int[]{click[0] + 1, click[1] - 1});
+            }
+            if (click[0] + 1 < board.length && click[1] + 1 < board[0].length && board[click[0] + 1][click[1] + 1] == 'E') {
+                updateBoard(board, new int[]{click[0] + 1, click[1] + 1});
+            }
+        }
+        return board;
+    }
+
+    // 判断是否是地雷，同时对x，y做界限校验
+    private boolean isMine(char[][] board, int x, int y) {
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+            return false;
+        }
+        return board[x][y] == 'M' || board[x][y] == 'X';
+    }
+
+    /**
      * 539. 最小时间差
      * @param timePoints
      * @return
@@ -1036,6 +1114,30 @@ public class Solution {
             max = Math.max(max, sum);
         }
         return max / (double) k;
+    }
+
+    /**
+     * 647. 回文子串
+     * @param s
+     * @return
+     */
+    public int countSubstrings(String s) {
+        int count = s.length();
+        for (int i = 1; i < s.length() - 1; ++i) {
+            int j = 1;
+            while (i - j >= 0 && i + j < s.length() && s.charAt(i - j) == s.charAt(i + j)) {
+                ++count;
+                ++j;
+            }
+        }
+        for (int i = 1; i < s.length(); ++i) {
+            int j = 0;
+            while (i - 1 - j >= 0 && i + j < s.length() && s.charAt(i - 1 - j) == s.charAt(i + j)) {
+                ++count;
+                ++j;
+            }
+        }
+        return count;
     }
 
     /**
