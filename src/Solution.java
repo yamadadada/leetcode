@@ -945,6 +945,36 @@ public class Solution {
     }
 
     /**
+     * 459. 重复的子字符串
+     * @param s
+     * @return
+     */
+    public boolean repeatedSubstringPattern(String s) {
+//        if (s.length() == 1) {
+//            return false;
+//        }
+//        char endChar = s.charAt(s.length() - 1);
+//        for (int i = 0; i < s.length() - 1; ++i) {
+//            if (s.length() % (i + 1) == 0 && s.charAt(i) == endChar) {
+//                String substring = s.substring(0, i + 1);
+//                boolean flag = true;
+//                for (int j = 1; j < s.length() / (i + 1); ++j) {
+//                    if (!substring.equals(s.substring(j * (i + 1), j * (i + 1) + i + 1))) {
+//                        flag = false;
+//                        break;
+//                    }
+//                }
+//                if (flag) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+        // 双倍字符串法
+        return (s + s).indexOf(s, 1) != s.length();
+    }
+
+    /**
      * 529. 扫雷游戏
      * @param board
      * @param click
