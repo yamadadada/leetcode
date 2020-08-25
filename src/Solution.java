@@ -975,6 +975,35 @@ public class Solution {
     }
 
     /**
+     * 491. 递增子序列
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        dfs(ans, temp, 0, Integer.MIN_VALUE, nums);
+        return ans;
+    }
+
+    private void dfs(List<List<Integer>> ans, List<Integer> temp, int cur, int last, int[] nums) {
+        if (cur == nums.length) {
+            if (temp.size() >= 2) {
+                ans.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (nums[cur] >= last) {
+            temp.add(nums[cur]);
+            dfs(ans, temp, cur + 1, nums[cur], nums);
+            temp.remove(temp.size() - 1);
+        }
+        if (nums[cur] != last) {
+            dfs(ans, temp, cur + 1, last, nums);
+        }
+    }
+
+    /**
      * 529. 扫雷游戏
      * @param board
      * @param click
