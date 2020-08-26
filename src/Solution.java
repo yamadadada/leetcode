@@ -7,6 +7,42 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 17. 电话号码的字母组合
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinations(String digits) {
+        String[] phoneMap = new String[]{"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        List<String> ans = new ArrayList<>();
+        if (digits.length() != 0) {
+            StringBuilder sb = new StringBuilder();
+            phoneLetter(digits, 0, phoneMap, ans, sb);
+        }
+        return ans;
+    }
+
+    /**
+     * 递归dfs遍历
+     * @param digits
+     * @param i 当前递归的位置下标
+     * @param phoneMap
+     * @param ans
+     */
+    private void phoneLetter(String digits, int i, String[] phoneMap, List<String> ans, StringBuilder sb) {
+        if (i == digits.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+        int phone = Integer.parseInt(digits.substring(i, i + 1));
+        String letter = phoneMap[phone - 2];
+        for (int j = 0; j < letter.length(); j++) {
+            sb.append(letter.charAt(j));
+            phoneLetter(digits, i + 1, phoneMap, ans, sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+    /**
      * 31. 下一个排列
      * @param nums
      */
