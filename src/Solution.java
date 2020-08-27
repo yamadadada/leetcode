@@ -8,6 +8,42 @@ import java.util.stream.Collectors;
 public class Solution {
 
     /**
+     * 17. 电话号码的字母组合
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinations(String digits) {
+        String[] phoneMap = new String[]{"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        List<String> ans = new ArrayList<>();
+        if (digits.length() != 0) {
+            StringBuilder sb = new StringBuilder();
+            phoneLetter(digits, 0, phoneMap, ans, sb);
+        }
+        return ans;
+    }
+
+    /**
+     * 递归dfs遍历
+     * @param digits
+     * @param i 当前递归的位置下标
+     * @param phoneMap
+     * @param ans
+     */
+    private void phoneLetter(String digits, int i, String[] phoneMap, List<String> ans, StringBuilder sb) {
+        if (i == digits.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+        int phone = Integer.parseInt(digits.substring(i, i + 1));
+        String letter = phoneMap[phone - 2];
+        for (int j = 0; j < letter.length(); j++) {
+            sb.append(letter.charAt(j));
+            phoneLetter(digits, i + 1, phoneMap, ans, sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+    /**
      * 31. 下一个排列
      * @param nums
      */
@@ -989,6 +1025,65 @@ public class Solution {
             }
         }
         return count;
+    }
+
+    /**
+     * 459. 重复的子字符串
+     * @param s
+     * @return
+     */
+    public boolean repeatedSubstringPattern(String s) {
+//        if (s.length() == 1) {
+//            return false;
+//        }
+//        char endChar = s.charAt(s.length() - 1);
+//        for (int i = 0; i < s.length() - 1; ++i) {
+//            if (s.length() % (i + 1) == 0 && s.charAt(i) == endChar) {
+//                String substring = s.substring(0, i + 1);
+//                boolean flag = true;
+//                for (int j = 1; j < s.length() / (i + 1); ++j) {
+//                    if (!substring.equals(s.substring(j * (i + 1), j * (i + 1) + i + 1))) {
+//                        flag = false;
+//                        break;
+//                    }
+//                }
+//                if (flag) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+        // 双倍字符串法
+        return (s + s).indexOf(s, 1) != s.length();
+    }
+
+    /**
+     * 491. 递增子序列
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        dfs(ans, temp, 0, Integer.MIN_VALUE, nums);
+        return ans;
+    }
+
+    private void dfs(List<List<Integer>> ans, List<Integer> temp, int cur, int last, int[] nums) {
+        if (cur == nums.length) {
+            if (temp.size() >= 2) {
+                ans.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (nums[cur] >= last) {
+            temp.add(nums[cur]);
+            dfs(ans, temp, cur + 1, nums[cur], nums);
+            temp.remove(temp.size() - 1);
+        }
+        if (nums[cur] != last) {
+            dfs(ans, temp, cur + 1, last, nums);
+        }
     }
 
     /**

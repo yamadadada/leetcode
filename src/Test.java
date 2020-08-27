@@ -1,11 +1,12 @@
 import utils.ArrayUtil;
 
+import java.util.List;
+
 public class Test {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        char[][] c = ArrayUtil.generate2CharArray();
-        char[][] board = solution.updateBoard(c, new int[]{1, 2});
-        ArrayUtil.print2CharArray(board);
+        String digits = "23";
+        System.out.println(solution.letterCombinations(digits));
     }
 }
