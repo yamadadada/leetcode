@@ -1283,6 +1283,31 @@ public class Solution {
     }
 
     /**
+     * 657. 机器人能否返回原点
+     * @param moves
+     * @return
+     */
+    public boolean judgeCircle(String moves) {
+        // 水平方向
+        int horizontal = 0;
+        // 垂直方向
+        int vertical = 0;
+        for (int i = 0; i < moves.length(); ++i) {
+            char c = moves.charAt(i);
+            if (c == 'R') {
+                ++horizontal;
+            } else if (c == 'L') {
+                --horizontal;
+            } else if (c == 'U') {
+                ++vertical;
+            } else {
+                --vertical;
+            }
+        }
+        return horizontal == 0 && vertical == 0;
+    }
+
+    /**
      * 662. 二叉树最大宽度
      * @param root
      * @return
