@@ -3,6 +3,7 @@ import common.TreeNode;
 
 import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
 
@@ -805,6 +806,23 @@ public class Solution {
     }
 
     /**
+     * 201. 数字范围按位与
+     * @param m
+     * @param n
+     * @return
+     */
+    public int rangeBitwiseAnd(int m, int n) {
+        // 位移，寻找最大公共前缀
+        int shift = 0;
+        while (m < n) {
+            m >>= 1;
+            n >>= 1;
+            ++shift;
+        }
+        return m << shift;
+    }
+
+    /**
      * 238. 除自身以外数组的乘积
      * @param nums
      * @return
@@ -898,7 +916,27 @@ public class Solution {
      * @return
      */
     public List<String> findItinerary(List<List<String>> tickets) {
+        Map<String, PriorityQueue<String>> map = new HashMap<>();
+        List<String> ans = new LinkedList<>();
+        for (List<String> ticket : tickets) {
+            String from = ticket.get(0);
+            String to = ticket.get(1);
+            if (!map.containsKey(from)) {
+                map.put(from, new PriorityQueue<>());
+            }
+            map.get(from).add(to);
+        }
+        dfs("JFK", map, ans);
+        Collections.reverse(ans);
+        return ans;
+    }
 
+    private void dfs(String curr, Map<String, PriorityQueue<String>> map, List<String> ans) {
+        while (map.containsKey(curr) && map.get(curr).size() > 0) {
+            String temp = map.get(curr).poll();
+            dfs(temp, map, ans);
+        }
+        ans.add(curr);
     }
 
     /**
