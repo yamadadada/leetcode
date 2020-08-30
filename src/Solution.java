@@ -823,6 +823,66 @@ public class Solution {
     }
 
     /**
+     * 214. 最短回文串
+     * @param s
+     * @return
+     */
+    public String shortestPalindrome(String s) {
+//        StringBuilder sb = new StringBuilder(s);
+//        int i = 0;
+//        int j = s.length() - 1;
+//        // 限制只能在原字符串左侧加，即<=limit
+//        int limit = 0;
+//        while (i < j) {
+//            if (sb.charAt(i) != sb.charAt(j)) {
+//                if (i > limit) {
+//                    j += i - limit;
+//                    i = limit;
+//                }
+//                sb.insert(i, sb.charAt(j));
+//                j++;
+//                limit++;
+//            }
+//            i++;
+//            j--;
+//        }
+//        return sb.toString();
+        // 使用KMP算法的求next数组方法
+        int[] next = new int[s.length()];
+        int j = 0;
+        for (int i = 1; i < s.length(); i++) {
+            while (j != 0 && s.charAt(j) != s.charAt(i)) {
+                // 从next[i+1]的求解回溯到next[j]
+                j = next[j - 1];
+            }
+            if (s.charAt(j) == s.charAt(i)) {
+                j++;
+            }
+            next[i] = j;
+        }
+
+        String str = new StringBuilder(s).reverse().toString();
+        int i1 = 0;
+        while (i1 < str.length()) {
+            int i2 = i1;
+            int k = 0;
+            while (i2 < str.length() && k < s.length()) {
+                if (str.charAt(i2) != s.charAt(k)) {
+                    i1 += next[k];
+                    break;
+                }
+                i2++;
+                k++;
+            }
+            if (i2 == str.length()) {
+                break;
+            }
+            i1++;
+        }
+        return str.substring(0, i1) + s;
+    }
+
+    /**
      * 238. 除自身以外数组的乘积
      * @param nums
      * @return
@@ -1202,6 +1262,20 @@ public class Solution {
             }
         }
         return dp[l][r][k];
+    }
+
+    /**
+     * 557. 反转字符串中的单词 III
+     * @param s
+     * @return
+     */
+    public String reverseWords(String s) {
+        String[] strs = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            sb.append(" ").append(new StringBuilder(str).reverse());
+        }
+        return sb.toString().substring(1);
     }
 
     /**
