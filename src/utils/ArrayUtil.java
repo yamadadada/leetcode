@@ -5,30 +5,11 @@ import java.util.*;
 public class ArrayUtil {
 
     /**
-     * 通过控制台的输入生成list
-     * @return 生成的list
-     */
-    public static List<List<String>> generateList() {
-        Scanner sc = new Scanner(System.in);
-        List<List<String>> result = new ArrayList<>();
-        System.out.println("请输入数组元素，以空格分割，输入exit退出：");
-        while (true) {
-            String line = sc.nextLine();
-            if ("exit".equals(line)) {
-                break;
-            }
-            String[] arr = line.split("\\s+");
-            result.add(new ArrayList<>(Arrays.asList(arr)));
-        }
-        return result;
-    }
-
-    /**
      * 通过控制台的输入返回一维String数组
      * @return 生成的一维String数组
      */
     public static String[] generateStringArray() {
-        List<List<String>> lists = generateList();
+        List<List<String>> lists = ListUtil.generate2List();
         return (String[]) lists.get(0).toArray();
     }
 
@@ -37,7 +18,7 @@ public class ArrayUtil {
      * @return 生成的二维String数组
      */
     public static String[][] generate2StringArray() {
-        List<List<String>> lists = generateList();
+        List<List<String>> lists = ListUtil.generate2List();
         String[][] array = new String[lists.size()][];
         for (int i = 0; i < lists.size(); ++i) {
             array[i] = lists.get(i).toArray(new String[0]);

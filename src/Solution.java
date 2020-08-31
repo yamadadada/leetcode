@@ -1565,6 +1565,34 @@ public class Solution {
     }
 
     /**
+     * 841. 钥匙和房间
+     * @param rooms
+     * @return
+     */
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        int[] flag = new int[rooms.size()];
+        flag[0] = 1;
+        dfs(rooms, flag, 0);
+        int count = 0;
+        for (int f : flag) {
+            count += f;
+        }
+        return count == rooms.size();
+    }
+
+    private void dfs(List<List<Integer>> rooms, int[] flag, int i) {
+        if (flag[i] == 1) {
+            List<Integer> room = rooms.get(i);
+            for (Integer r : room) {
+                if (flag[r] == 0) {
+                    flag[r] = 1;
+                    dfs(rooms, flag, r);
+                }
+            }
+        }
+    }
+
+    /**
      * 859. 亲密字符串
      * @param A
      * @param B
