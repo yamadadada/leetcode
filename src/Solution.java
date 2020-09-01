@@ -1118,6 +1118,23 @@ public class Solution {
     }
 
     /**
+     * 486. 预测赢家
+     * @param nums
+     * @return
+     */
+    public boolean PredictTheWinner(int[] nums) {
+        // 动态规划
+        int[] dp = new int[nums.length];
+        System.arraycopy(nums, 0, dp, 0, nums.length);
+        for (int i = nums.length - 1; i >= 0; i--) {
+            for (int j = i + 1; j < nums.length; j++) {
+                dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+            }
+        }
+        return dp[nums.length - 1] >= 0;
+    }
+
+    /**
      * 491. 递增子序列
      * @param nums
      * @return

@@ -7,6 +7,7 @@ public class Test {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.canVisitAllRooms(ListUtil.generate2IntegerList()));
+        int[] nums = {1, 5, 2};
+        System.out.println(solution.PredictTheWinner(nums));
     }
 }
