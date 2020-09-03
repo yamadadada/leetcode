@@ -150,6 +150,73 @@ public class Solution {
     }
 
     /**
+     * 51. N 皇后
+     * @param n
+     * @return
+     */
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        if (n == 1) {
+            List<String> list = new ArrayList<>();
+            list.add("Q");
+            ans.add(list);
+            return ans;
+        }
+        if (n < 4) {
+            return ans;
+        }
+        for (int j = 0; j < n; j++) {
+            int[][] array = new int[n][n];
+            array[0][j] = 2;
+            extendArray(array, 0, j, n);
+            dfs(ans, array, 1, n);
+        }
+        return ans;
+    }
+
+    private void dfs(List<List<String>> ans, int[][] array, int i, int n) {
+        if (i == n) {
+            List<String> list = new ArrayList<>();
+            for (int[] b : array) {
+                StringBuilder sb = new StringBuilder();
+                for (int c : b) {
+                    if (c == 2) {
+                        sb.append("Q");
+                    } else {
+                        sb.append(".");
+                    }
+                }
+                list.add(sb.toString());
+            }
+            ans.add(list);
+            return;
+        }
+        for (int j = 0; j < n; j++) {
+            if (array[i][j] == 0) {
+                int[][] a = new int[n][n];
+                for (int k = 0; k < n; k++) {
+                    System.arraycopy(array[k], 0, a[k], 0, n);
+                }
+                a[i][j] = 2;
+                extendArray(a, i, j, n);
+                dfs(ans, a, i + 1, n);
+            }
+        }
+    }
+
+    private void extendArray(int[][] a, int i, int j, int n) {
+        for (int k = 1; i + k < n; k++) {
+            a[i + k][j] = 1;
+            if (j - k >= 0) {
+                a[i + k][j - k] = 1;
+            }
+            if (j + k < n) {
+                a[i + k][j + k] = 1;
+            }
+        }
+    }
+
+    /**
      * 55. 跳跃游戏
      * @param nums
      * @return
