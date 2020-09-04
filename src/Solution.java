@@ -903,6 +903,39 @@ public class Solution {
     }
 
     /**
+     * 257. 二叉树的所有路径
+     * @param root
+     * @return
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        StringBuilder sb = new StringBuilder(root.val + "");
+        if (root.left == null && root.right == null) {
+            result.add(sb.toString());
+            return result;
+        }
+        dfs(root.left, sb, result);
+        dfs(root.right, sb, result);
+        return result;
+    }
+
+    private void dfs(TreeNode root, StringBuilder sb, List<String> result) {
+        if (root == null) {
+            return;
+        }
+        sb.append("->").append(root.val);
+        if (root.left == null && root.right == null) {
+            result.add(sb.toString());
+        }
+        dfs(root.left, sb, result);
+        dfs(root.right, sb, result);
+        sb.delete(sb.lastIndexOf("->"), sb.length());
+    }
+
+    /**
      * 264. 丑数 II
      * @param n
      * @return
