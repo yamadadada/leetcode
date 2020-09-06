@@ -294,6 +294,41 @@ public class Solution {
     }
 
     /**
+     * 60. 第k个排列
+     * @param n
+     * @param k
+     * @return
+     */
+    public String getPermutation(int n, int k) {
+        if (n == 1) {
+            return "1";
+        }
+        int factorial = getFactorial(n - 1);
+        int a = (k - 1) / factorial + 1;
+        int b = (k - 1) % factorial + 1;
+        String s = getPermutation(n - 1, b);
+        StringBuilder sb = new StringBuilder(a);
+        for (int i = 0; i < s.length(); i++) {
+            int value = Integer.parseInt(s.substring(i, i + 1));
+            if (value >= a) {
+                value++;
+            }
+            sb.append(value);
+        }
+        return a + sb.toString();
+    }
+
+    private int getFactorial(int n) {
+        int i = 2;
+        int sum = 1;
+        while (i <= n) {
+            sum *= i;
+            i++;
+        }
+        return sum;
+    }
+
+    /**
      * 64. 最小路径和
      * @param grid
      * @return
