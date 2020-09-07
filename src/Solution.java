@@ -1160,6 +1160,48 @@ public class Solution {
     }
 
     /**
+     * 347. 前 K 个高频元素
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                map.put(num, 0);
+            }
+            map.put(num, map.get(num) + 1);
+        }
+        int[][] array = new int[nums.length + 1][];
+        for (int key : map.keySet()) {
+            int value = map.get(key);
+            if (array[value] == null) {
+                array[value] = new int[]{key};
+            } else {
+                int[] tempArray = new int[array[value].length + 1];
+                System.arraycopy(array[value], 0, tempArray, 0, array[value].length);
+                tempArray[array[value].length] = key;
+                array[value] = tempArray;
+            }
+        }
+        int[] ans = new int[k];
+        int count = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if (array[i] == null) {
+                continue;
+            }
+            for (int j = 0; j < array[i].length; j++) {
+                ans[count++] = array[i][j];
+                if (count >= k) {
+                    return ans;
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
      * 443. 压缩字符串
      * @param chars
      * @return
