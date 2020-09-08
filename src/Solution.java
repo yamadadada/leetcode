@@ -429,6 +429,33 @@ public class Solution {
     }
 
     /**
+     * 77. 组合
+     * @param n
+     * @param k
+     * @return
+     */
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            dfs(ans, list, n, k, i);
+        }
+        return ans;
+    }
+
+    private void dfs(List<List<Integer>> ans, List<Integer> list, int n, int k, int a) {
+        list.add(a);
+        if (list.size() == k) {
+            ans.add(new ArrayList<>(list));
+        } else {
+            for (int i = a + 1; i <= n; i++) {
+                dfs(ans, list, n, k, i);
+            }
+        }
+        list.remove(list.size() - 1);
+    }
+
+    /**
      * 79. 单词搜索
      * @param board
      * @param word
