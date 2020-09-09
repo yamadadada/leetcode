@@ -7,6 +7,6 @@ public class Test {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.combine(4, 2);
+        solution.combinationSum(new int[]{2, 3, 5}, 8);
     }
 }

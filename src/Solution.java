@@ -97,6 +97,34 @@ public class Solution {
     }
 
     /**
+     * 39. 组合总和
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < candidates.length; i++) {
+            dfs(candidates, target, ans, new ArrayList<>(), i, 0);
+        }
+        return ans;
+    }
+
+    private void dfs(int[] candidates, int target, List<List<Integer>> ans, List<Integer> list, int i, int sum) {
+        sum += candidates[i];
+        list.add(candidates[i]);
+        if (sum == target) {
+            ans.add(new ArrayList<>(list));
+        }
+        if (sum < target) {
+            for (; i < candidates.length; i++) {
+                dfs(candidates, target, ans, list, i, sum);
+            }
+        }
+        list.remove(list.size() - 1);
+    }
+
+    /**
      * 48. 旋转图像
      * @param matrix
      */
