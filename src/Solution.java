@@ -125,6 +125,46 @@ public class Solution {
     }
 
     /**
+     * 40. 组合总和 II
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<>();
+        // 去重
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < candidates.length; i++) {
+            if (i == 0 || candidates[i - 1] != candidates[i]) {
+                dfs(ans, new ArrayList<>(), candidates, target, i, 0, set);
+            }
+        }
+        return ans;
+    }
+
+    private void dfs(List<List<Integer>> ans, List<Integer> list, int[] candidates, int target, int i, int sum, Set<String> set) {
+        list.add(candidates[i]);
+        sum += candidates[i];
+        if (sum == target) {
+            StringBuilder sb = new StringBuilder();
+            for (int temp : list) {
+                sb.append(temp).append(",");
+            }
+            if (!set.contains(sb.toString())) {
+                ans.add(new ArrayList<>(list));
+                set.add(sb.toString());
+            }
+        }
+        if (sum < target) {
+            for (i = i + 1; i < candidates.length; i++) {
+                dfs(ans, list, candidates, target, i, sum, set);
+            }
+        }
+        list.remove(list.size() - 1);
+    }
+
+    /**
      * 48. 旋转图像
      * @param matrix
      */
@@ -1037,6 +1077,37 @@ public class Solution {
             i1++;
         }
         return str.substring(0, i1) + s;
+    }
+
+    /**
+     * 216. 组合总和 III
+     * @param k
+     * @param n
+     * @return
+     */
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 1; i <= 9; i++) {
+            dfs(ans, new ArrayList<>(), k, n, i, 0);
+        }
+        return ans;
+    }
+
+    private void dfs(List<List<Integer>> ans, List<Integer> list, int k, int n, int i, int sum) {
+        if (list.size() >= k) {
+            return;
+        }
+        list.add(i);
+        sum += i;
+        if (sum == n && list.size() == k) {
+            ans.add(new ArrayList<>(list));
+        }
+        if (sum < n) {
+            for (i = i + 1; i <= 9; i++) {
+                dfs(ans, list, k, n, i, sum);
+            }
+        }
+        list.remove(list.size() - 1);
     }
 
     /**
