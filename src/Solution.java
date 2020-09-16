@@ -1111,6 +1111,22 @@ public class Solution {
     }
 
     /**
+     * 226. 翻转二叉树
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        root.right = left;
+        root.left = right;
+        return root;
+    }
+
+    /**
      * 238. 除自身以外数组的乘积
      * @param nums
      * @return
