@@ -165,6 +165,39 @@ public class Solution {
     }
 
     /**
+     * 47. 全排列 II
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
+        boolean[] used = new boolean[nums.length];
+        List<List<Integer>> ans = new ArrayList<>();
+        huisu(nums, ans, new ArrayList<>(), used);
+        return ans;
+    }
+
+    private void huisu(int[] nums, List<List<Integer>> ans, List<Integer> list, boolean[] used) {
+        if (list.size() == nums.length) {
+            ans.add(new ArrayList<>(list));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            if (i > 0 && nums[i - 1] == nums[i] && !used[i - 1]) {
+                continue;
+            }
+            list.add(nums[i]);
+            used[i] = true;
+            huisu(nums, ans, list, used);
+            list.remove(list.size() - 1);
+            used[i] = false;
+        }
+    }
+
+    /**
      * 48. 旋转图像
      * @param matrix
      */
