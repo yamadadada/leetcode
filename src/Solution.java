@@ -557,6 +557,31 @@ public class Solution {
     }
 
     /**
+     * 78. 子集
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i <= nums.length; i++) {
+            huisu(nums, ans, new ArrayList<>(), i);
+        }
+        return ans;
+    }
+
+    private void huisu(int[] nums, List<List<Integer>> ans, List<Integer> list, int i) {
+        if (i == nums.length) {
+            ans.add(new ArrayList<>(list));
+            return;
+        }
+        list.add(nums[i]);
+        for (i = i + 1; i <= nums.length; i++) {
+            huisu(nums, ans, list, i);
+        }
+        list.remove(list.size() - 1);
+    }
+
+    /**
      * 79. 单词搜索
      * @param board
      * @param word
