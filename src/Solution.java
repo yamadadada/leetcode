@@ -1621,6 +1621,23 @@ public class Solution {
     }
 
     /**
+     * 538. 把二叉搜索树转换为累加树
+     * @param root
+     * @return
+     */
+    public TreeNode convertBST(TreeNode root) {
+        if (root != null) {
+            convertBST(root.right);
+            sum += root.val;
+            root.val = sum;
+            convertBST(root.left);
+        }
+        return root;
+    }
+
+    private int sum = 0;
+
+    /**
      * 539. 最小时间差
      * @param timePoints
      * @return
