@@ -908,6 +908,32 @@ public class Solution {
     }
 
     /**
+     * 113. 路径总和 II
+     * @param root
+     * @param sum
+     * @return
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> ans = new ArrayList<>();
+        pathSum2(ans, new ArrayList<>(), root, sum);
+        return ans;
+    }
+
+    private void pathSum2(List<List<Integer>> ans, List<Integer> list, TreeNode root, int sum) {
+        if (root == null) {
+            return;
+        }
+        sum -= root.val;
+        list.add(root.val);
+        if (sum == 0 && root.left == null && root.right == null) {
+            ans.add(new ArrayList<>(list));
+        }
+        pathSum2(ans, list, root.left, sum);
+        pathSum2(ans, list, root.right, sum);
+        list.remove(list.size() - 1);
+    }
+
+    /**
      * 114. 二叉树展开为链表
      * @param root
      */
@@ -1357,6 +1383,22 @@ public class Solution {
             k++;
         }
         return result;
+    }
+
+    /**
+     * 344. 反转字符串
+     * @param s
+     */
+    public void reverseString(char[] s) {
+        int i = 0;
+        int j = s.length - 1;
+        while (i < j) {
+            char temp = s[i];
+            s[i] = s[j];
+            s[j] = temp;
+            i++;
+            j--;
+        }
     }
 
     /**
@@ -1960,6 +2002,51 @@ public class Solution {
             list.add(sum);
         }
         return list.get(N).mod(new BigInteger(String.valueOf(1000000007))).intValue();
+    }
+
+    /**
+     * 834. 树中距离之和
+     * @param N
+     * @param edges
+     * @return
+     */
+    public int[] sumOfDistancesInTree(int N, int[][] edges) {
+        int[] ans = new int[N];
+        Map<Integer, List<Integer>> map = new HashMap<>(N);
+        // 初始化各节点连接的节点数组映射map
+        for (int i = 0; i < N; i++) {
+            map.put(i, new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            map.get(edge[0]).add(edge[1]);
+            map.get(edge[1]).add(edge[0]);
+        }
+        // 遍历计算各个节点
+        for (int i = 0; i < N; i++) {
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(i);
+            int modulus = 1;
+            boolean[] isVisit = new boolean[N];
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                for (int j = 0; j < size; j++) {
+                    Integer node = queue.remove();
+                    List<Integer> list = map.get(node);
+                    isVisit[node] = true;
+                    List<Integer> newList = new ArrayList<>();
+                    // 去除已经遍历过的
+                    for (Integer temp : list) {
+                        if (!isVisit[temp]) {
+                            newList.add(temp);
+                        }
+                    }
+                    ans[i] += newList.size() * modulus;
+                    queue.addAll(newList);
+                }
+                modulus++;
+            }
+        }
+        return ans;
     }
 
     /**
