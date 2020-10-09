@@ -1003,6 +1003,27 @@ public class Solution {
     }
 
     /**
+     * 141. 环形链表
+     * @param head
+     * @return
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        ListNode p = head;
+        ListNode q = head.next;
+        while (p != null && q != null && q.next != null) {
+            if (p == q) {
+                return true;
+            }
+            p = p.next;
+            q = q.next.next;
+        }
+        return false;
+    }
+
+    /**
      * 142. 环形链表 II
      * @param head
      * @return
