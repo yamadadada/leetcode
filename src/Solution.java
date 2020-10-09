@@ -2267,7 +2267,7 @@ public class Solution {
     public int sumRootToLeaf(TreeNode root) {
         dfs(root, 0);
         int mod = 1000000007;
-        return sum % mod;
+        return sum1 % mod;
     }
 
     private void dfs(TreeNode root, int val) {
@@ -2276,11 +2276,11 @@ public class Solution {
         }
         val = val << 1 | root.val;
         if (root.left == null && root.right == null) {
-            sum += val;
+            sum1 += val;
         }
         dfs(root.left, val);
         dfs(root.right, val);
     }
 
-    private int sum;
+    private int sum1;
 }
