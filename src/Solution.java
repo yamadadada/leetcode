@@ -1,3 +1,4 @@
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import common.ListNode;
 import common.TreeNode;
 
@@ -1718,6 +1719,32 @@ public class Solution {
             return false;
         }
         return board[x][y] == 'M' || board[x][y] == 'X';
+    }
+
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     * @param root
+     * @return
+     */
+    public int getMinimumDifference(TreeNode root) {
+        dfs(root);
+        return min;
+    }
+
+    private Integer pre = null;
+
+    private Integer min = Integer.MAX_VALUE;
+
+    private void dfs(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        dfs(root.left);
+        if (pre != null) {
+            min = Math.min(min, Math.abs(root.val - pre));
+        }
+        pre = root.val;
+        dfs(root.right);
     }
 
     /**
