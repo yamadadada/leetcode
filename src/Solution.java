@@ -1481,6 +1481,43 @@ public class Solution {
     }
 
     /**
+     * 416. 分割等和子集
+     * @param nums
+     * @return
+     */
+    public boolean canPartition(int[] nums) {
+        if (nums.length == 0) {
+            return false;
+        }
+        Arrays.sort(nums);
+        int target = 0;
+        for (int num : nums) {
+            target += num;
+        }
+        if (target % 2 == 1) {
+            return false;
+        }
+        target /= 2;
+        if (nums[nums.length - 1] > target) {
+            return false;
+        }
+        boolean[][] dp = new boolean[nums.length][target + 1];
+        dp[0][0] = true;
+        dp[0][nums[0]] = true;
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j <= target; j++) {
+                if (dp[i - 1][j]) {
+                    dp[i][j] = true;
+                    if (j + nums[i] <= target) {
+                        dp[i][j + nums[i]] = true;
+                    }
+                }
+            }
+        }
+        return dp[nums.length - 1][target];
+    }
+
+    /**
      * 443. 压缩字符串
      * @param chars
      * @return
