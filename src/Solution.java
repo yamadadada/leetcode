@@ -45,6 +45,22 @@ public class Solution {
     }
 
     /**
+     * 24. 两两交换链表中的节点
+     * @param head
+     * @return
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode b = head.next;
+        ListNode c = head.next.next;
+        b.next = head;
+        head.next = swapPairs(c);
+        return b;
+    }
+    
+    /**
      * 31. 下一个排列
      * @param nums
      */
