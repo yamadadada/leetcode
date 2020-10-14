@@ -2395,6 +2395,34 @@ public class Solution {
     }
 
     /**
+     * 1002. 查找常用字符
+     * @param A
+     * @return
+     */
+    public List<String> commonChars(String[] A) {
+        if (A.length == 0) {
+            return new ArrayList<>();
+        }
+        int[][] count = new int[A.length][26];
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < A[i].length(); j++) {
+                count[i][A[i].charAt(j) - 'a'] += 1;
+            }
+        }
+        List<String> ans = new ArrayList<>();
+        for (int i = 0; i < 26; i++) {
+            int n = Integer.MAX_VALUE;
+            for (int j = 0; j < A.length; j++) {
+                n = Math.min(n, count[j][i]);
+            }
+            for (int j = 0; j < n; j++) {
+                ans.add(String.valueOf((char)(i + 'a')));
+            }
+        }
+        return ans;
+    }
+
+    /**
      * 1008. 先序遍历构造二叉树
      * @param preorder
      * @return
