@@ -46,6 +46,31 @@ public class Solution {
     }
 
     /**
+     * 19. 删除链表的倒数第N个节点
+     * @param head
+     * @param n
+     * @return
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode myHead = new ListNode(0);
+        myHead.next = head;
+        ListNode p = myHead;
+        ListNode q = myHead;
+        while (p.next != null) {
+            p = p.next;
+            if (n <= 0) {
+                q = q.next;
+            }
+            n -= 1;
+        }
+        q.next = q.next.next;
+        return myHead.next;
+    }
+
+    /**
      * 24. 两两交换链表中的节点
      * @param head
      * @return
