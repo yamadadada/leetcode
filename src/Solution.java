@@ -1092,6 +1092,49 @@ public class Solution {
     }
 
     /**
+     * 143. 重排链表
+     * @param head
+     */
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        // 1.找链表中点
+        ListNode p = head;
+        ListNode q = head;
+        while (p != null && p.next != null) {
+            p = p.next.next;
+            q = q.next;
+        }
+        p = head;
+        // 2.反转后半部的链表
+        q = reverseNodeList(q);
+        // 3.合并两个链表
+        while (p != null) {
+            if (q == null) {
+                p.next = null;
+                break;
+            }
+            ListNode p2 = p.next;
+            ListNode q2 = q.next;
+            p.next = q;
+            q.next = p2;
+            p = p2;
+            q = q2;
+        }
+    }
+
+    private ListNode reverseNodeList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode p = reverseNodeList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+
+    /**
      * 167. 两数之和 II - 输入有序数组
      * @param numbers
      * @param target
@@ -2233,6 +2276,51 @@ public class Solution {
                 }
             }
         }
+    }
+
+    /**
+     * 844. 比较含退格的字符串
+     * @param S
+     * @param T
+     * @return
+     */
+    public boolean backspaceCompare(String S, String T) {
+        int skip1 = 0;
+        int skip2 = 0;
+        int i = S.length() - 1;
+        int j = T.length() - 1;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (S.charAt(i) == '#') {
+                    skip1++;
+                } else if (skip1 > 0){
+                    skip1--;
+                } else {
+                    break;
+                }
+                i--;
+            }
+            while (j >= 0) {
+                if (T.charAt(j) == '#') {
+                    skip2++;
+                } else if (skip2 > 0) {
+                    skip2--;
+                } else {
+                    break;
+                }
+                j--;
+            }
+            if (i >= 0 && j >= 0) {
+                if (S.charAt(i) != T.charAt(j)) {
+                    return false;
+                }
+            } else if (i >= 0 || j >= 0) {
+                return false;
+            }
+            i--;
+            j--;
+        }
+        return true;
     }
 
     /**
