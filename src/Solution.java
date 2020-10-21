@@ -2455,6 +2455,41 @@ public class Solution {
     }
 
     /**
+     * 925. 长按键入
+     * @param name
+     * @param typed
+     * @return
+     */
+    public boolean isLongPressedName(String name, String typed) {
+        if (name.length() == 0) {
+            return false;
+        }
+        int i = 0;
+        int j = 0;
+        char c = name.charAt(0);
+        while (i < name.length() && j < typed.length()) {
+            if (name.charAt(i) == typed.charAt(j)) {
+                c = name.charAt(i);
+                i++;
+                j++;
+            } else {
+                if (typed.charAt(j) == c) {
+                    j++;
+                } else {
+                    return false;
+                }
+            }
+        }
+        while (j < typed.length()) {
+            if (typed.charAt(j) != c) {
+                return false;
+            }
+            j++;
+        }
+        return i == name.length();
+    }
+
+    /**
      * 929. 独特的电子邮件地址
      * @param emails
      * @return
