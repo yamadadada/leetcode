@@ -1320,6 +1320,58 @@ public class Solution {
     }
 
     /**
+     * 234. 回文链表
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode p = head;
+        ListNode q = head;
+        while (p != null && q != null && q.next != null) {
+            p = p.next;
+            q = q.next.next;
+        }
+        if (q != null) {
+            // 链表数为奇数
+            q = nodeReverse(p.next);
+        } else {
+            // 链表数为偶数
+            q = nodeReverse(p);
+        }
+        p = head;
+        while (p != null && q != null) {
+            if (p.val != q.val) {
+                return false;
+            }
+            p = p.next;
+            q = q.next;
+        }
+        return true;
+    }
+
+    private ListNode nodeReverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = head;
+        ListNode current = head.next;
+        ListNode next = head.next.next;
+        head.next = null;
+        while (current != null) {
+            current.next = pre;
+            pre = current;
+            current = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+        return pre;
+    }
+
+    /**
      * 238. 除自身以外数组的乘积
      * @param nums
      * @return
