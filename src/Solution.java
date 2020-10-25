@@ -2401,6 +2401,50 @@ public class Solution {
     }
 
     /**
+     * 845. 数组中的最长山脉
+     * @param A
+     * @return
+     */
+    public int longestMountain(int[] A) {
+        int ans = 0;
+        int count = 1;
+        int i = 1;
+        int status = 0;
+        while (i < A.length) {
+            if (status == 0 && A[i - 1] < A[i]) {
+                status = 1;
+                count++;
+            } else if (status == 1) {
+                if (A[i - 1] == A[i]) {
+                    status = 0;
+                    count = 0;
+                }
+                if (A[i - 1] > A[i]) {
+                    status = 2;
+                }
+                count++;
+            } else if (status == 2) {
+                if (A[i - 1] <= A[i]) {
+                    ans = Math.max(ans, count);
+                    if (A[i - 1] < A[i]) {
+                        status = 1;
+                        count = 1;
+                    } else {
+                        status = 0;
+                        count = 0;
+                    }
+                }
+                count++;
+            }
+            i++;
+        }
+        if (status == 2) {
+            ans = Math.max(ans, count);
+        }
+        return ans;
+    }
+
+    /**
      * 859. 亲密字符串
      * @param A
      * @param B
@@ -2727,4 +2771,34 @@ public class Solution {
     }
 
     private int sum1;
+
+    /**
+     * 1024. 视频拼接
+     * @param clips
+     * @param T
+     * @return
+     */
+    public int videoStitching(int[][] clips, int T) {
+        int[] greed = new int[T];
+        for (int[] clip : clips) {
+            if (clip[0] < T) {
+                greed[clip[0]] = Math.max(greed[clip[0]], clip[1]);
+            }
+
+        }
+        int pre = 0;
+        int last = 0;
+        int ans = 0;
+        for (int i = 0; i < T; i++) {
+            last = Math.max(last, greed[i]);
+            if (last == i) {
+                return -1;
+            }
+            if (pre == i) {
+                ans++;
+                pre = last;
+            }
+        }
+        return ans;
+    }
 }
