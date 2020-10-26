@@ -2801,4 +2801,25 @@ public class Solution {
         }
         return ans;
     }
+
+    /**
+     * 1365. 有多少小于当前数字的数字
+     * @param nums
+     * @return
+     */
+    public int[] smallerNumbersThanCurrent(int[] nums) {
+        int[] count = new int[101];
+        for (int num : nums) {
+            count[num]++;
+        }
+        int[] ans = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            int c = 0;
+            for (int j = 0; j < nums[i]; j++) {
+                c += count[j];
+            }
+            ans[i] = c;
+        }
+        return ans;
+    }
 }
