@@ -1160,6 +1160,64 @@ public class Solution {
     }
 
     /**
+     * 144. 二叉树的前序遍历
+     * @param root
+     * @return
+     */
+//    public List<Integer> preorderTraversal(TreeNode root) {
+//        List<Integer> ans = new ArrayList<>();
+//        if (root == null) {
+//            return ans;
+//        }
+//        Stack<TreeNode> stack = new Stack<>();
+//        TreeNode node = root;
+//        while (!stack.isEmpty() || node != null) {
+//            while (node != null) {
+//                ans.add(node.val);
+//                stack.push(node);
+//                node = node.left;
+//            }
+//            node = stack.pop();
+//            node = node.right;
+//        }
+//        return ans;
+//    }
+
+    /**
+     * 144. 二叉树的前序遍历
+     * @param root
+     * @return
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        TreeNode p1 = root;
+        TreeNode p2;
+        while (p1 != null) {
+            p2 = p1.left;
+            if (p2 != null) {
+                while (p2.right != null && p2.right != p1) {
+                    p2 = p2.right;
+                }
+                if (p2.right == null) {
+                    ans.add(p1.val);
+                    p2.right = p1;
+                    p1 = p1.left;
+                    continue;
+                } else {
+                    p2.right = null;
+                }
+            } else {
+                ans.add(p1.val);
+            }
+            p1 = p1.right;
+        }
+        return ans;
+    }
+
+    /**
      * 167. 两数之和 II - 输入有序数组
      * @param numbers
      * @param target
