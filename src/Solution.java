@@ -2861,6 +2861,27 @@ public class Solution {
     }
 
     /**
+     * 1207. 独一无二的出现次数
+     * @param arr
+     * @return
+     */
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int a : arr) {
+            map.put(a, map.getOrDefault(a, 0) + 1);
+        }
+        Map<Integer, Integer> times = new HashMap<>();
+        for (int key : map.keySet()) {
+            int time = map.get(key);
+            if (times.containsKey(time)) {
+                return false;
+            }
+            times.put(time, 1);
+        }
+        return true;
+    }
+
+    /**
      * 1365. 有多少小于当前数字的数字
      * @param nums
      * @return
