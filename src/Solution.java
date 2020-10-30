@@ -1073,6 +1073,34 @@ public class Solution {
     }
 
     /**
+     * 129. 求根到叶子节点数字之和
+     * @param root
+     * @return
+     */
+    public int sumNumbers(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        this.treeNodeList.add(root.val);
+        if (root.left == null && root.right == null) {
+            int a = 1;
+            for (int i = this.treeNodeList.size() - 1; i >= 0; i--) {
+                this.ans += this.treeNodeList.get(i) * a;
+                a *= 10;
+            }
+        } else {
+            sumNumbers(root.left);
+            sumNumbers(root.right);
+        }
+        this.treeNodeList.remove(this.treeNodeList.size() - 1);
+        return this.ans;
+    }
+
+    private final List<Integer> treeNodeList = new ArrayList<>();
+
+    private int ans = 0;
+
+    /**
      * 141. 环形链表
      * @param head
      * @return
