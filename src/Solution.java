@@ -1101,6 +1101,71 @@ public class Solution {
     private int ans = 0;
 
     /**
+     * 140. 单词拆分 II
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        return null;
+//        Map<Character, List<Integer>> map = new HashMap<>();
+//        List<String> ans = new ArrayList<>();
+//        Map<Integer, List<List<Integer>>> memoryMap = new HashMap<>();
+//        // 初始化map
+//        for (int i = 0; i < wordDict.size(); i++) {
+//            char c = wordDict.get(i).charAt(0);
+//            List<Integer> list = map.get(c);
+//            if (list == null) {
+//                list = new ArrayList<>();
+//            }
+//            list.add(i);
+//            map.put(c, list);
+//        }
+//        List<List<Integer>> splitList = wordBreak(s, wordDict, map, new ArrayList<>(), 0, memoryMap);
+//        // 构建结果
+//        for (List<Integer> splitIndex : splitList) {
+//            StringBuilder sb = new StringBuilder();
+//            int pre = 0;
+//            for (int i = 0; i < splitIndex.size(); i++) {
+//                Integer split = splitIndex.get(i);
+//                sb.append(s, pre, split).append(" ");
+//                pre = split;
+//            }
+//            String a = sb.toString();
+//            ans.add(a.substring(0, a.length() - 1));
+//        }
+//        return ans;
+    }
+
+//    private List<List<Integer>> wordBreak(String s, List<String> wordDict, Map<Character, List<Integer>> map,
+//                           List<Integer> splitIndex, int i, Map<Integer, List<List<Integer>>> memoryMap) {
+//        List<List<Integer>> res = new ArrayList<>();
+//        if (i == s.length()) {
+//            res.add(new ArrayList<>(splitIndex));
+//            return res;
+//        }
+//        // 读取缓存
+//        if (memoryMap.get(i) != null) {
+//            return memoryMap.get(i);
+//        }
+//        List<Integer> list = map.get(s.charAt(i));
+//        if (list == null) {
+//            return res;
+//        }
+//        for (Integer index : list) {
+//            String word = wordDict.get(index);
+//            if (word.length() <= s.length() - i && word.equals(s.substring(i, i + word.length()))) {
+//                splitIndex.add(i + word.length());
+//                List<List<Integer>> r = wordBreak(s, wordDict, map, splitIndex, i + word.length(), memoryMap);
+//                res.addAll(new ArrayList<>(r));
+//                splitIndex.remove(splitIndex.size() - 1);
+//            }
+//        }
+//        memoryMap.put(i, res);
+//        return res;
+//    }
+
+    /**
      * 141. 环形链表
      * @param head
      * @return
