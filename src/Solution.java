@@ -1781,6 +1781,31 @@ public class Solution {
     }
 
     /**
+     * 349. 两个数组的交集
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        for (int i1 : nums1) {
+            set1.add(i1);
+        }
+        for (int i2 : nums2) {
+            set2.add(i2);
+        }
+        set1.retainAll(set2);
+        int[] res = new int[set1.size()];
+        int i = 0;
+        for (int a : set1) {
+            res[i] = a;
+            i++;
+        }
+        return res;
+    }
+
+    /**
      * 404. 左叶子之和
      * @param root
      * @return
