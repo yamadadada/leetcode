@@ -2806,6 +2806,28 @@ public class Solution {
     }
 
     /**
+     * 941. 有效的山脉数组
+     * @param A
+     * @return
+     */
+    public boolean validMountainArray(int[] A) {
+        if (A.length < 3) {
+            return false;
+        }
+        int i = 1;
+        while (i < A.length && A[i - 1] < A[i]) {
+            i++;
+        }
+        if (i == 1 || i == A.length) {
+            return false;
+        }
+        while (i < A.length && A[i - 1] > A[i]) {
+            i++;
+        }
+        return i == A.length;
+    }
+
+    /**
      * 977. 有序数组的平方
      * @param A
      * @return
