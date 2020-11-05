@@ -438,6 +438,42 @@ public class Solution {
     }
 
     /**
+     * 57. 插入区间
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int[][] ans = new int[intervals.length][];
+//        int k = 0;
+//        int i = 0;
+//        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+//            int[] tempArray = new int[2];
+//            tempArray[0] = intervals[i][0];
+//            tempArray[1] = intervals[i][1];
+//            ans[k++] = tempArray;
+//            i++;
+//        }
+//        while (i < intervals.length && (intervals[i][1] >= newInterval[0] || (intervals[i][0] <= newInterval[1]))) {
+//            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+//            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+//            i++;
+//        }
+//        int[] tempArray = new int[2];
+//        tempArray[0] = newInterval[0];
+//        tempArray[1] = newInterval[1];
+//        ans[k++] = tempArray;
+//        while (i < intervals.length && intervals[i][0] > newInterval[1]) {
+//            tempArray = new int[2];
+//            tempArray[0] = intervals[i][0];
+//            tempArray[1] = intervals[i][1];
+//            ans[k++] = tempArray;
+//            i++;
+//        }
+        return ans;
+    }
+
+    /**
      * 60. 第k个排列
      * @param n
      * @param k
@@ -1070,6 +1106,92 @@ public class Solution {
         a = Math.max(Math.max(a, b), 0);
         maxPath = Math.max(maxPath, a + root.val);
         return a + root.val;
+    }
+
+    /**
+     * 127. 单词接龙
+     * @param beginWord
+     * @param endWord
+     * @param wordList
+     * @return
+     */
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (beginWord.equals(endWord)) {
+            return 0;
+        }
+        int ans = 1;
+        List<List<Integer>> lists = new ArrayList<>();
+        int endWordIndex = -1;
+        for (int i = 0; i < wordList.size(); i++) {
+            String word = wordList.get(i);
+            // 检查endWord是否在wordList中
+            if (endWord.equals(word)) {
+                endWordIndex = i;
+            }
+            addEdge(word, wordList, lists);
+        }
+        if (endWordIndex == -1) {
+            return 0;
+        }
+        boolean[] visited = new boolean[wordList.size()];
+        addEdge(beginWord, wordList, lists);
+        Queue<Integer> queue = new LinkedList<>(lists.get(wordList.size()));
+        Queue<Integer> queue2 = new LinkedList<>();
+        queue2.add(endWordIndex);
+        while (!queue.isEmpty() && !queue2.isEmpty()) {
+            ans++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Integer index = queue.poll();
+                for (Integer index2 : queue2) {
+                    if (index.equals(index2)) {
+                        return ans;
+                    }
+                }
+                visited[index] = true;
+                for (Integer index2 : lists.get(index)) {
+                    if (!visited[index2]) {
+                        queue.add(index2);
+                    }
+                }
+            }
+
+            ans++;
+            size = queue2.size();
+            for (int i = 0; i < size; i++) {
+                Integer index = queue2.poll();
+                for (Integer index2 : queue) {
+                    if (index.equals(index2)) {
+                        return ans;
+                    }
+                }
+                visited[index] = true;
+                for (Integer index2 : lists.get(index)) {
+                    if (!visited[index2]) {
+                        queue2.add(index2);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    private void addEdge(String s, List<String> wordList, List<List<Integer>> lists) {
+        List<Integer> list = new ArrayList<>();
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < wordList.size(); i++) {
+            int count = 0;
+            String word = wordList.get(i);
+            for (int j = 0; j < word.length(); j++) {
+                if (chars[j] != word.charAt(j)) {
+                    count++;
+                }
+            }
+            if (count == 1) {
+                list.add(i);
+            }
+        }
+        lists.add(list);
     }
 
     /**
