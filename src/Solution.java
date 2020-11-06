@@ -1119,6 +1119,7 @@ public class Solution {
         if (beginWord.equals(endWord)) {
             return 0;
         }
+        Integer.bitCount()
         int ans = 1;
         List<List<Integer>> lists = new ArrayList<>();
         int endWordIndex = -1;
@@ -3141,6 +3142,22 @@ public class Solution {
             times.put(time, 1);
         }
         return true;
+    }
+
+    /**
+     * 1356. 根据数字二进制下 1 的数目排序
+     * @param arr
+     * @return
+     */
+    public int[] sortByBits(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = Integer.bitCount(arr[i]) * 100000 + arr[i];
+        }
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] %= 100000;
+        }
+        return arr;
     }
 
     /**
