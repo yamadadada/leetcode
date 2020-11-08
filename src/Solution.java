@@ -1085,6 +1085,34 @@ public class Solution {
     }
 
     /**
+     * 122. 买卖股票的最佳时机 II
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        if (prices.length <= 1) {
+            return 0;
+        }
+        int res = 0;
+        int min;
+        int max;
+        int i = 1;
+        while (i < prices.length) {
+            while (i < prices.length && prices[i - 1] >= prices[i]) {
+                i++;
+            }
+            min = prices[i - 1];
+            max = prices[i - 1];
+            while (i < prices.length && prices[i - 1] < prices[i]) {
+                max = prices[i];
+                i++;
+            }
+            res += max - min;
+        }
+        return res;
+    }
+
+    /**
      * 124. 二叉树中的最大路径和
      * @param root
      * @return
