@@ -1147,7 +1147,6 @@ public class Solution {
         if (beginWord.equals(endWord)) {
             return 0;
         }
-        Integer.bitCount()
         int ans = 1;
         List<List<Integer>> lists = new ArrayList<>();
         int endWordIndex = -1;
@@ -2976,6 +2975,56 @@ public class Solution {
             i++;
         }
         return i == A.length;
+    }
+
+    /**
+     * 973. 最接近原点的 K 个点
+     * @param points
+     * @param K
+     * @return
+     */
+    public int[][] kClosest(int[][] points, int K) {
+        fastSelect(points, K, 0, points.length - 1);
+        int[][] res = new int[K][];
+        if (K >= 0) System.arraycopy(points, 0, res, 0, K);
+        return res;
+    }
+
+    private void fastSelect(int[][] points, int K, int left, int right) {
+        if (points.length == 0 || left >= right) {
+            return;
+        }
+        int i = left;
+        int j = right;
+        int a = getDistance(points, i);
+        while (i < j) {
+            while (i < j && getDistance(points, j) >= a) {
+                j--;
+            }
+            swap(points, i, j);
+            while (i < j && getDistance(points, i) <= a) {
+                i++;
+            }
+            swap(points, i, j);
+        }
+        if (i == K) {
+            return;
+        }
+        if (i < K) {
+            fastSelect(points, K, i + 1, right);
+        } else {
+            fastSelect(points, K, left, i - 1);
+        }
+    }
+
+    private int getDistance(int[][] points, int index) {
+        return points[index][0] * points[index][0] + points[index][1] * points[index][1];
+    }
+
+    private void swap(int[][] points, int i, int j) {
+        int[] temp = points[i];
+        points[i] = points[j];
+        points[j] = temp;
     }
 
     /**
