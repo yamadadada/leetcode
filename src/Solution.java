@@ -2902,6 +2902,29 @@ public class Solution {
     }
 
     /**
+     * 922. 按奇偶排序数组 II
+     * @param A
+     * @return
+     */
+    public int[] sortArrayByParityII(int[] A) {
+        // 偶数
+        int i = 0;
+        // 奇数
+        int j = 1;
+        int[] res = new int[A.length];
+        for (int value : A) {
+            if (value % 2 == 0) {
+                res[i] = value;
+                i += 2;
+            } else {
+                res[j] = value;
+                j += 2;
+            }
+        }
+        return res;
+    }
+
+    /**
      * 925. 长按键入
      * @param name
      * @param typed
