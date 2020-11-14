@@ -3224,6 +3224,36 @@ public class Solution {
     }
 
     /**
+     * 1122. 数组的相对排序
+     * @param arr1
+     * @param arr2
+     * @return
+     */
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int arr : arr1) {
+            countMap.put(arr, countMap.getOrDefault(arr, 0) + 1);
+        }
+        int k = 0;
+        for (int arr : arr2) {
+            int count = countMap.get(arr);
+            for (int i = 0; i < count; i++) {
+                arr1[k++] = arr;
+            }
+            countMap.remove(arr);
+        }
+        int splitIndex = k;
+        for (int key : countMap.keySet()) {
+            int count = countMap.get(key);
+            for (int i = 0; i < count; i++) {
+                arr1[k++] = key;
+            }
+        }
+        Arrays.sort(arr1, splitIndex, arr1.length);
+        return arr1;
+    }
+
+    /**
      * 1207. 独一无二的出现次数
      * @param arr
      * @return
