@@ -1956,6 +1956,54 @@ public class Solution {
     }
 
     /**
+     * 402. 移掉K位数字
+     * @param num
+     * @param k
+     * @return
+     */
+    public String removeKdigits(String num, int k) {
+        if (k == 0) {
+            return String.valueOf(Integer.parseInt(num));
+        }
+        if (num.length() == k) {
+            return "0";
+        }
+        num = removeKdigits1(num, k);
+        int i = 0;
+        while (i < num.length() && num.charAt(i) == '0') {
+            i++;
+        }
+        String ans = num.substring(i);
+        if (ans.length() == 0) {
+            return "0";
+        }
+        return ans;
+    }
+
+    private String removeKdigits1(String num, int k) {
+        if (k == 0) {
+            return String.valueOf(Integer.parseInt(num));
+        }
+        if (num.length() == k) {
+            return "";
+        }
+        int minValue = Integer.MAX_VALUE;
+        for (int i = 0; i < num.length(); i++) {
+            minValue = Math.min(Integer.parseInt(num.substring(i, i + 1)), minValue);
+        }
+        int minIndex = num.indexOf(String.valueOf(minValue));
+        String ans;
+        if (minIndex < k) {
+            ans = minValue + removeKdigits1(num.substring(minIndex + 1), k - minIndex);
+        } else if (minIndex == k) {
+            ans = num.substring(minIndex);
+        } else {
+            ans = removeKdigits1(num.substring(0, minIndex), k) + num.substring(minIndex);
+        }
+        return ans;
+    }
+
+    /**
      * 404. 左叶子之和
      * @param root
      * @return
