@@ -3292,6 +3292,47 @@ public class Solution {
     }
 
     /**
+     * 1030. 距离顺序排列矩阵单元格
+     * @param R
+     * @param C
+     * @param r0
+     * @param c0
+     * @return
+     */
+    public int[][] allCellsDistOrder(int R, int C, int r0, int c0) {
+        int[][] res = new int[R * C][];
+        boolean[][] visit = new boolean[R][C];
+        int k = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{r0, c0});
+        visit[r0][c0] = true;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int[] node = queue.poll();
+                res[k++] = node;
+                if (node[0] - 1 >= 0 && !visit[node[0] - 1][node[1]]) {
+                    visit[node[0] - 1][node[1]] = true;
+                    queue.add(new int[]{node[0] - 1, node[1]});
+                }
+                if (node[0] + 1 < R && !visit[node[0] + 1][node[1]]) {
+                    visit[node[0] + 1][node[1]] = true;
+                    queue.add(new int[]{node[0] + 1, node[1]});
+                }
+                if (node[1] - 1 >= 0 && !visit[node[0]][node[1] - 1]) {
+                    visit[node[0]][node[1] - 1] = true;
+                    queue.add(new int[]{node[0], node[1] - 1});
+                }
+                if (node[1] + 1 < C && !visit[node[0]][node[1] + 1]) {
+                    visit[node[0]][node[1] + 1] = true;
+                    queue.add(new int[]{node[0], node[1] + 1});
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
      * 1122. 数组的相对排序
      * @param arr1
      * @param arr2
