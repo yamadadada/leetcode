@@ -1630,6 +1630,48 @@ public class Solution {
     }
 
     /**
+     * 222. 完全二叉树的节点个数
+     * @param root
+     * @return
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int level = 0;
+        TreeNode node = root;
+        while (node != null) {
+            level++;
+            node = node.left;
+        }
+        int a = 1 << (level - 1);
+        int b = (1 << level) - 1;
+        while (a < b) {
+            int mid = (b - a + 1) / 2 + a;
+            if (exist(root, level, mid)) {
+                a = mid;
+            } else {
+                b = mid - 1;
+            }
+        }
+        return a;
+    }
+
+    private boolean exist(TreeNode root, int level, int k) {
+        int bits = 1 << (level - 2);
+        TreeNode node = root;
+        while (node != null && bits > 0) {
+            if ((bits & k) == 0) {
+                node = node.left;
+            } else {
+                node = node.right;
+            }
+            bits >>= 1;
+        }
+        return node != null;
+    }
+
+    /**
      * 226. 翻转二叉树
      * @param root
      * @return
@@ -2116,6 +2158,30 @@ public class Solution {
             charIndex = countIndex;
         }
         return charIndex;
+    }
+
+    /**
+     * 452. 用最少数量的箭引爆气球
+     * @param points
+     * @return
+     */
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 0) {
+            return 0;
+        }
+        Arrays.sort(points, Comparator.comparingInt(o -> o[0]));
+        int count = 1;
+        int x = points[0][0];
+        int curCount = 1;
+        int curMin = points[0][1];
+        int i = 1;
+        while (i < points.length) {
+            int[] point = points[i];
+            if (x >= point[0]) {
+
+            }
+        }
+        return count;
     }
 
     /**
