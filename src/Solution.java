@@ -3485,4 +3485,35 @@ public class Solution {
         }
         return ans;
     }
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public String sortString(String s) {
+        StringBuilder sb = new StringBuilder();
+        int[] countArray = new int[26];
+        for (char c : s.toCharArray()) {
+            countArray[c - 'a']++;
+        }
+        int num = 0;
+        while (num < s.length()) {
+            for (int i = 0; i < 26; i++) {
+                if (countArray[i] > 0) {
+                    sb.append((char)('a' + i));
+                    countArray[i]--;
+                    num++;
+                }
+            }
+            for (int i = 25; i >= 0; i--) {
+                if (countArray[i] > 0) {
+                    sb.append((char)('a' + i));
+                    countArray[i]--;
+                    num++;
+                }
+            }
+        }
+        return sb.toString();
+    }
 }
