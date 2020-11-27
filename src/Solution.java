@@ -2225,6 +2225,40 @@ public class Solution {
     }
 
     /**
+     * 454. 四数相加 II
+     * @param A
+     * @param B
+     * @param C
+     * @param D
+     * @return
+     */
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        HashMap<Integer, Integer> map1 = new HashMap<>();
+        HashMap<Integer, Integer> map2 = new HashMap<>();
+        for (int a : A) {
+            for (int b : B) {
+                int key = a + b;
+                map1.putIfAbsent(key, 0);
+                map1.put(key, map1.get(key) + 1);
+            }
+        }
+        for (int c : C) {
+            for (int d : D) {
+                int key = c + d;
+                map2.putIfAbsent(key, 0);
+                map2.put(key, map2.get(key) + 1);
+            }
+        }
+        int res = 0;
+        for (int key : map1.keySet()) {
+            if (map2.containsKey(-key)) {
+                res += map1.get(key) * map2.get(-key);
+            }
+        }
+        return res;
+    }
+
+    /**
      * 455. 分发饼干
      * @param g
      * @param s
