@@ -2778,6 +2778,56 @@ public class Solution {
     }
 
     /**
+     * 767. 重构字符串
+     * @param S
+     * @return
+     */
+    public String reorganizeString(String S) {
+        if (S.length() == 0) {
+            return "";
+        }
+        // 对字符串中的字母计数
+        int[] countArray = new int[26];
+        int maxCount = 0;
+        char maxChar = S.charAt(0);
+        for (char c : S.toCharArray()) {
+            countArray[c - 'a']++;
+            if (countArray[c - 'a'] > maxCount) {
+                maxCount = countArray[c - 'a'];
+                maxChar = c;
+            }
+        }
+        int n = S.length();
+        // 最多的字符不能超过总字符数的一半
+        if ((n % 2 == 1 && maxCount > (n + 1) / 2) || (n % 2 == 0 && maxCount > n / 2)) {
+            return "";
+        }
+        char[] res = new char[n];
+        int oddIndex = 1;
+        int evenIndex = 0;
+        // 先插入字符数最多的字母
+        for (int i = 0; i < maxCount; i++) {
+            res[evenIndex] = maxChar;
+            evenIndex += 2;
+        }
+        countArray[maxChar - 'a'] = 0;
+        // 间隔插入到新数组
+        for (int i = 0; i < 26; i++) {
+            while (countArray[i] > 0) {
+                countArray[i]--;
+                if (evenIndex < n) {
+                    res[evenIndex] = (char) ('a' + i);
+                    evenIndex += 2;
+                } else {
+                    res[oddIndex] = (char) ('a' + i);
+                    oddIndex += 2;
+                }
+            }
+        }
+        return new String(res);
+    }
+
+    /**
      * 790. 多米诺和托米诺平铺
      * @param N
      * @return
