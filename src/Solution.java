@@ -114,6 +114,50 @@ public class Solution {
     }
 
     /**
+     * 34. 在排序数组中查找元素的第一个和最后一个位置
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int res1 = -1;
+        int res2 = -1;
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target) {
+                if (mid == left || nums[mid] != nums[mid - 1]) {
+                    res1 = mid;
+                    break;
+                }
+                right = mid - 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        left = 0;
+        right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target) {
+                if (mid == right || nums[mid] != nums[mid + 1]) {
+                    res2 = mid;
+                    break;
+                }
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return new int[]{res1, res2};
+    }
+
+    /**
      * 36. 有效的数独
      * @param board
      * @return
