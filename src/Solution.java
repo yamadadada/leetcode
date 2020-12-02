@@ -1903,6 +1903,74 @@ public class Solution {
     }
 
     /**
+     * 321. 拼接最大数
+     * @param nums1
+     * @param nums2
+     * @param k
+     * @return
+     */
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        // TODO
+        int[] res = new int[k];
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        if (n1 + n2 == k) {
+            int i = 0;
+            int j = 0;
+            int a = 0;
+            while (i < nums1.length && j < nums2.length) {
+                if (nums1[i] < nums2[j]) {
+                    res[a++] = nums2[j++];
+                } else if (nums1[i] == nums2[j]) {
+                    if (i + 1 == n1) {
+                        res[a++] = nums2[j++];
+                    } else if (j + 1 == n2) {
+                        res[a++] = nums1[i++];
+                    } else if (nums1[i + 1] >= nums2[j + 1]) {
+                        res[a++] = nums1[i++];
+                    } else {
+                        res[a++] = nums2[j++];
+                    }
+                } else {
+                    res[a++] = nums1[i++];
+                }
+            }
+            while (i < nums1.length) {
+                res[a++] = nums1[i++];
+            }
+            while (j < nums2.length) {
+                res[a++] = nums2[j++];
+            }
+            return res;
+        }
+        int max = 0;
+        if (n1 > 1) {
+            max = Math.max(max, Integer.parseInt(intArray2String(maxNumber(Arrays.copyOfRange(nums1, 1, n1), Arrays.copyOfRange(nums2, 0, n2), k))));
+            max = Math.max(max, Integer.parseInt(nums1[0] + intArray2String(maxNumber(Arrays.copyOfRange(nums1, 1, n1), Arrays.copyOfRange(nums2, 0, n2), k - 1))));
+        }
+        if (n2 > 1) {
+            max = Math.max(max, Integer.parseInt(intArray2String(maxNumber(Arrays.copyOfRange(nums1, 0, n1), Arrays.copyOfRange(nums2, 1, n2), k))));
+            max = Math.max(max, Integer.parseInt(nums1[0] + intArray2String(maxNumber(Arrays.copyOfRange(nums1, 0, n1), Arrays.copyOfRange(nums2, 1, n2), k - 1))));
+        }
+        for (int i = k - 1; i >= 0; i--) {
+            res[i] = max % 10;
+            max /= 10;
+        }
+        return res;
+    }
+
+    private String intArray2String(int[] array) {
+        if (array.length == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int a : array) {
+            sb.append(a);
+        }
+        return sb.toString();
+    }
+
+    /**
      * 329. 矩阵中的最长递增路径
      * @param matrix
      * @return
