@@ -1623,6 +1623,26 @@ public class Solution {
     }
 
     /**
+     * 204. 计数质数
+     * @param n
+     * @return
+     */
+    public int countPrimes(int n) {
+        boolean[] isPrime = new boolean[n];
+        Arrays.fill(isPrime, true);
+        int ans = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) {
+                ans += 1;
+                for (int j = 2 * i; j < n; j+= i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
      * 214. 最短回文串
      * @param s
      * @return
