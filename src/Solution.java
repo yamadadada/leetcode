@@ -2693,6 +2693,30 @@ public class Solution {
     }
 
     /**
+     * 621. 任务调度器
+     * @param tasks
+     * @param n
+     * @return
+     */
+    public int leastInterval(char[] tasks, int n) {
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        int maxCount = 0;
+        for (char task : tasks) {
+            int count = map.getOrDefault(task, 0) + 1;
+            map.put(task, count);
+            if (count == max) {
+                maxCount++;
+            }
+            if (count > max) {
+                max = count;
+                maxCount = 1;
+            }
+        }
+        return Math.max((n + 1) * (max - 1) + maxCount, tasks.length);
+    }
+
+    /**
      * 643. 子数组最大平均数 I
      * @param nums
      * @param k
