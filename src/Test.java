@@ -10,8 +10,8 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        int i = 1;
-        char c = (char) ('a' + i);
-        System.out.println(c);
+        int a = 0;
+        a = ~a;
+        System.out.println(a);
     }
 }

@@ -3235,6 +3235,58 @@ public class Solution {
     }
 
     /**
+     * 861. 翻转矩阵后的得分
+     * @param A
+     * @return
+     */
+    public int matrixScore(int[][] A) {
+        // 保证第一列都为1
+        for (int i = 0; i < A.length; i++) {
+            if (A[i][0] == 0) {
+                for (int j = 0; j < A[i].length; j++) {
+                    if (A[i][j] == 0) {
+                        A[i][j] = 1;
+                    } else {
+                        A[i][j] = 0;
+                    }
+                }
+            }
+        }
+        // 第二列开始根据1的数量判断是否翻转
+        for (int j = 1; j < A[0].length; j++) {
+            int count0 = 0;
+            int count1 = 0;
+            for (int[] ints : A) {
+                if (ints[j] == 0) {
+                    count0++;
+                } else {
+                    count1++;
+                }
+            }
+            if (count0 > count1) {
+                // 按列翻转
+                for (int i = 0; i < A.length; i++) {
+                    if (A[i][j] == 0) {
+                        A[i][j] = 1;
+                    } else {
+                        A[i][j] = 0;
+                    }
+                }
+            }
+        }
+        // 计算结果
+        int res = 0;
+        for (int[] ints : A) {
+            for (int j = 0; j < ints.length; j++) {
+                if (ints[j] == 1) {
+                    res += (1 << (ints.length - j - 1));
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
      * 872. 叶子相似的树
      * @param root1
      * @param root2
