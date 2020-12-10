@@ -1,11 +1,9 @@
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import common.ListNode;
 import common.Node;
 import common.TreeNode;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Solution {
 
@@ -550,6 +548,30 @@ public class Solution {
             i++;
         }
         return sum;
+    }
+
+    /**
+     * 62. 不同路径
+     * @param m
+     * @param n
+     * @return
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] array = new int[m][n];
+        // 最后一列初始化为1
+        for (int i = 0; i < m; i++) {
+            array[i][n - 1] = 1;
+        }
+        // 最后一行初始化为1
+        for (int j = 0; j < n; j++) {
+            array[m - 1][j] = 1;
+        }
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = n - 2; j >= 0; j--) {
+                array[i][j] = array[i + 1][j] + array[i][j + 1];
+            }
+        }
+        return array[0][0];
     }
 
     /**
@@ -3132,6 +3154,75 @@ public class Solution {
     }
 
     /**
+     * 842. 将数组拆分成斐波那契序列
+     * @param S
+     * @return
+     */
+    public List<Integer> splitIntoFibonacci(String S) {
+        //TODO
+        List<Integer> res = new ArrayList<>();
+        for (int i = 1; i <= S.length() - 1; i++) {
+            if (i > S.length() / 2) {
+                break;
+            }
+            long a1 = Long.parseLong(S.substring(0, i));
+            if (String.valueOf(a1).length() != i) {
+                // 不能以0为开头
+                continue;
+            }
+            for (int j = i + 1; j <= S.length(); j++) {
+                if (S.length() - j < Math.max(i, j - i)) {
+                    // 剩余数量太少
+                    break;
+                }
+                long a2 = Long.parseLong(S.substring(i, j));
+                if (String.valueOf(a2).length() != j - i) {
+                    // 不能以0为开头
+                    continue;
+                }
+                long a = a1 + a2;
+                String sum = String.valueOf(a);
+                if (S.startsWith(sum, j)) {
+                    List<Long> list = new ArrayList<>();
+                    list.add(a1);
+                    list.add(a2);
+                    list.add(a);
+                    if (backTrace(S, res, list, j + sum.length())) {
+                        return res;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    private boolean backTrace(String S, List<Integer> res, List<Long> list, int start) {
+        if (start >= S.length()) {
+            for (Long l : list) {
+                res.add(l.intValue());
+            }
+            return true;
+        }
+        int size = list.size();
+        if (list.size() <= 2) {
+            return false;
+        }
+        String sum = String.valueOf(list.get(size - 2) + list.get(size - 1));
+        if (S.length() - start < sum.length()) {
+            return false;
+        }
+        if (!S.startsWith(sum, start)) {
+            return false;
+        }
+        list.add(list.get(size - 2) + list.get(size - 1));
+        if (backTrace(S, res, list, start + sum.length())) {
+            return true;
+        }
+        list.remove(list.size() - 1);
+        return false;
+    }
+
+    /**
      * 844. 比较含退格的字符串
      * @param S
      * @param T
@@ -3256,6 +3347,40 @@ public class Solution {
             }
         }
         return second != -1 && A.charAt(first) == B.charAt(second) && A.charAt(second) == B.charAt(first);
+    }
+
+    /**
+     * 860. 柠檬水找零
+     * @param bills
+     * @return
+     */
+    public boolean lemonadeChange(int[] bills) {
+        int count5 = 0;
+        int count10 = 0;
+        for (int bill : bills) {
+            if (bill == 5) {
+                count5++;
+            } else {
+                if (bill == 10) {
+                    if (count5 >= 1) {
+                        count5--;
+                    } else {
+                        return false;
+                    }
+                    count10++;
+                } else {
+                    if (count10 >= 1 && count5 >= 1) {
+                        count10--;
+                        count5--;
+                    } else if (count5 >= 3) {
+                        count5 -= 3;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**

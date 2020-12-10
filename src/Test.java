@@ -10,8 +10,8 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        int a = 0;
-        a = ~a;
-        System.out.println(a);
+        Solution solution = new Solution();
+        String s = "1101111";
+        System.out.println(solution.splitIntoFibonacci(s));
     }
 }
