@@ -2192,6 +2192,37 @@ public class Solution {
     }
 
     /**
+     * 376. 摆动序列
+     * @param nums
+     * @return
+     */
+    public int wiggleMaxLength(int[] nums) {
+        if (nums.length < 2) {
+            return nums.length;
+        }
+        int count = 1;
+        int i = 1;
+        while (i < nums.length) {
+            if (nums[i] - nums[i - 1] > 0) {
+                while (i < nums.length && nums[i] - nums[i - 1] >= 0) {
+                    i++;
+                }
+                count++;
+            }
+            if (i < nums.length && nums[i] - nums[i - 1] < 0) {
+                while (i < nums.length && nums[i] - nums[i - 1] <= 0) {
+                    i++;
+                }
+                count++;
+            }
+            while (i < nums.length && nums[i] - nums[i - 1] == 0) {
+                i++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * 402. 移掉K位数字
      * @param num
      * @param k
