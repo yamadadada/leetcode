@@ -1756,6 +1756,22 @@ public class Solution {
     }
 
     /**
+     * 217. 存在重复元素
+     * @param nums
+     * @return
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+            set.add(num);
+        }
+        return false;
+    }
+
+    /**
      * 222. 完全二叉树的节点个数
      * @param root
      * @return
