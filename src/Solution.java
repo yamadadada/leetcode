@@ -1945,6 +1945,36 @@ public class Solution {
     }
 
     /**
+     * 290. 单词规律
+     * @param pattern
+     * @param s
+     * @return
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] array = s.split("\\s+");
+        if (array.length != pattern.length()) {
+            return false;
+        }
+        Map<Character, String> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < pattern.length(); i++) {
+            char c = pattern.charAt(i);
+            if (map.containsKey(c)) {
+                if (!map.get(c).equals(array[i])) {
+                    return false;
+                }
+            } else {
+                if (set.contains(array[i])) {
+                    return false;
+                }
+                set.add(array[i]);
+                map.put(c, array[i]);
+            }
+        }
+        return true;
+    }
+
+    /**
      * 321. 拼接最大数
      * @param nums1
      * @param nums2
