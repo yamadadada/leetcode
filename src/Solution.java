@@ -1756,6 +1756,22 @@ public class Solution {
     }
 
     /**
+     * 217. 存在重复元素
+     * @param nums
+     * @return
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+            set.add(num);
+        }
+        return false;
+    }
+
+    /**
      * 222. 完全二叉树的节点个数
      * @param root
      * @return
@@ -2241,6 +2257,37 @@ public class Solution {
             }
         }
         return 'a';
+    }
+
+    /*
+     * 376. 摆动序列
+     * @param nums
+     * @return
+     */
+    public int wiggleMaxLength(int[] nums) {
+        if (nums.length < 2) {
+            return nums.length;
+        }
+        int count = 1;
+        int i = 1;
+        while (i < nums.length) {
+            if (nums[i] - nums[i - 1] > 0) {
+                while (i < nums.length && nums[i] - nums[i - 1] >= 0) {
+                    i++;
+                }
+                count++;
+            }
+            if (i < nums.length && nums[i] - nums[i - 1] < 0) {
+                while (i < nums.length && nums[i] - nums[i - 1] <= 0) {
+                    i++;
+                }
+                count++;
+            }
+            while (i < nums.length && nums[i] - nums[i - 1] == 0) {
+                i++;
+            }
+        }
+        return count;
     }
 
     /**
