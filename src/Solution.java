@@ -1991,6 +1991,36 @@ public class Solution {
     }
 
     /**
+     * 316. 去除重复字母
+     * @param s
+     * @return
+     */
+    public String removeDuplicateLetters(String s) {
+        boolean[] visit = new boolean[26];
+        int[] count = new int[26];
+        for (char c : s.toCharArray()) {
+            count[c - 'a']++;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (!visit[c - 'a']) {
+                while (sb.length() > 0 && sb.charAt(sb.length() - 1) > c) {
+                    if (count[sb.charAt(sb.length() - 1) - 'a'] > 0) {
+                        visit[sb.charAt(sb.length() - 1) - 'a'] = false;
+                        sb.deleteCharAt(sb.length() - 1);
+                    } else {
+                        break;
+                    }
+                }
+                visit[c - 'a'] = true;
+                sb.append(c);
+            }
+            count[c - 'a']--;
+        }
+        return sb.toString();
+    }
+
+    /**
      * 321. 拼接最大数
      * @param nums1
      * @param nums2
