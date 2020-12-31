@@ -2514,6 +2514,27 @@ public class Solution {
     }
 
     /**
+     * 435. 无重叠区间
+     * @param intervals
+     * @return
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0) {
+            return 0;
+        }
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
+        int right = intervals[0][1];
+        int ans = 1;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= right) {
+                ans++;
+                right = intervals[i][1];
+            }
+        }
+        return intervals.length - ans;
+    }
+
+    /**
      * 443. 压缩字符串
      * @param chars
      * @return
