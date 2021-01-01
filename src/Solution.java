@@ -2840,6 +2840,33 @@ public class Solution {
     }
 
     /**
+     * 605. 种花问题
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int count = 1;
+        int ans = 0;
+        for (int value : flowerbed) {
+            if (value == 0) {
+                count++;
+            } else {
+                ans += (count - 1) / 2;
+                if (ans >= n) {
+                    return true;
+                }
+                count = 0;
+            }
+        }
+        if (flowerbed[flowerbed.length - 1] == 0) {
+            ans += count / 2;
+            return ans >= n;
+        }
+        return false;
+    }
+
+    /**
      * 617. 合并二叉树
      * @param t1
      * @param t2
