@@ -3334,6 +3334,42 @@ public class Solution {
     }
 
     /**
+     * 830. 较大分组的位置
+     * @param s
+     * @return
+     */
+    public List<List<Integer>> largeGroupPositions(String s) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (s.length() == 0) {
+            return list;
+        }
+        char c = s.charAt(0);
+        int count = 1;
+        int start = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) != c) {
+                if (count >= 3) {
+                    List<Integer> item = new ArrayList<>();
+                    item.add(start);
+                    item.add(i - 1);
+                    list.add(item);
+                }
+                c = s.charAt(i);
+                count = 0;
+                start = i;
+            }
+            count++;
+        }
+        if (count >= 3) {
+            List<Integer> item = new ArrayList<>();
+            item.add(start);
+            item.add(s.length() - 1);
+            list.add(item);
+        }
+        return list;
+    }
+
+    /**
      * 834. 树中距离之和
      * @param N
      * @param edges
