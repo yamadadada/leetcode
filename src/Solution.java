@@ -4,6 +4,8 @@ import common.TreeNode;
 
 import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Solution {
 
@@ -2393,6 +2395,18 @@ public class Solution {
     }
 
     /**
+     * 399. 除法求值
+     * @param equations
+     * @param values
+     * @param queries
+     * @return
+     */
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        // TODO
+        return null;
+    }
+
+    /**
      * 402. 移掉K位数字
      * @param num
      * @param k
@@ -2905,6 +2919,43 @@ public class Solution {
             }
         }
         return dp[l][r][k];
+    }
+
+    /**
+     * 547. 省份数量
+     * @param isConnected
+     * @return
+     */
+    public int findCircleNum(int[][] isConnected) {
+        int[] parent = new int[isConnected.length];
+        for (int i = 0; i < isConnected.length; i++) {
+            parent[i] = i;
+        }
+        for (int i = 0; i < isConnected.length; i++) {
+            for (int j = 0; j < isConnected[i].length; j++) {
+                if (isConnected[i][j] == 1) {
+                    union(parent, i, j);
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < isConnected.length; i++) {
+            if (parent[i] == i) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    private void union(int[] parent, int index1, int index2) {
+        parent[find(parent, index1)] = find(parent, index2);
+    }
+
+    private int find(int[] parent, int index) {
+        if (parent[index] != index) {
+            return find(parent, parent[index]);
+        }
+        return parent[index];
     }
 
     /**
