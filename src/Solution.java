@@ -2782,6 +2782,21 @@ public class Solution {
     }
 
     /**
+     * 509. 斐波那契数
+     * @param n
+     * @return
+     */
+    public int fib(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        return fib(n - 1) + fib(n - 2);
+    }
+
+    /**
      * 529. 扫雷游戏
      * @param board
      * @param click
