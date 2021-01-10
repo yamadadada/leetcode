@@ -1921,6 +1921,37 @@ public class Solution {
     }
 
     /**
+     * 228. 汇总区间
+     * @param nums
+     * @return
+     */
+    public List<String> summaryRanges(int[] nums) {
+        List<String> res = new ArrayList<>();
+        if (nums.length == 0) {
+            return res;
+        }
+        int start = nums[0];
+        int curr = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != curr + 1) {
+                if (start == curr) {
+                    res.add(String.valueOf(start));
+                } else {
+                    res.add(start + "->" + curr);
+                }
+                start = nums[i];
+            }
+            curr = nums[i];
+        }
+        if (start == curr) {
+            res.add(String.valueOf(start));
+        } else {
+            res.add(start + "->" + curr);
+        }
+        return res;
+    }
+
+    /**
      * 234. 回文链表
      * @param head
      * @return
