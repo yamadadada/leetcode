@@ -3198,6 +3198,39 @@ public class Solution {
     }
 
     /**
+     * 684. 冗余连接
+     * @param edges
+     * @return
+     */
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] parent = new int[edges.length + 1];
+        for (int i = 1; i < edges.length + 1; i++) {
+            parent[i] = i;
+        }
+        for (int[] edge : edges) {
+            int node1 = edge[0];
+            int node2 = edge[1];
+            if (find1(parent, node1) != find1(parent, node2)) {
+                union1(parent, node1, node2);
+            } else {
+                return edge;
+            }
+        }
+        return new int[0];
+    }
+
+    private int find1(int[] parent, int index) {
+        if (parent[index] != index) {
+            parent[index] = find1(parent, parent[index]);
+        }
+        return parent[index];
+    }
+
+    private void union1(int[] parent, int index1, int index2) {
+        parent[find1(parent, index1)] = find1(parent, index2);
+    }
+
+    /**
      * 712. 两个字符串的最小ASCII删除和
      * @param s1
      * @param s2
