@@ -4150,6 +4150,21 @@ public class Solution {
     }
 
     /**
+     * 1018. 可被 5 整除的二进制前缀
+     * @param A
+     * @return
+     */
+    public List<Boolean> prefixesDivBy5(int[] A) {
+        int prefix = 0;
+        List<Boolean> res = new ArrayList<>();
+        for (int a : A) {
+            prefix = ((prefix << 1) + a) % 5;
+            res.add(prefix == 0);
+        }
+        return res;
+    }
+
+    /**
      * 1019. 链表中的下一个更大节点
      * @param head
      * @return
