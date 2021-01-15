@@ -1227,6 +1227,25 @@ public class Solution {
     }
 
     /**
+     * 123. 买卖股票的最佳时机 III
+     * @param prices
+     * @return
+     */
+    public int maxProfit123(int[] prices) {
+        int buy1 = -prices[0];
+        int sell1 = 0;
+        int buy2 = -prices[0];
+        int sell2 = 0;
+        for (int i = 1; i < prices.length; i++) {
+            buy1 = Math.max(buy1, -prices[i]);
+            sell1 = Math.max(sell1, buy1 + prices[i]);
+            buy2 = Math.max(buy2, sell1 - prices[i]);
+            sell2 = Math.max(sell2, buy2 + prices[i]);
+        }
+        return sell2;
+    }
+
+    /**
      * 124. 二叉树中的最大路径和
      * @param root
      * @return
@@ -1901,6 +1920,37 @@ public class Solution {
         root.right = left;
         root.left = right;
         return root;
+    }
+
+    /**
+     * 228. 汇总区间
+     * @param nums
+     * @return
+     */
+    public List<String> summaryRanges(int[] nums) {
+        List<String> res = new ArrayList<>();
+        if (nums.length == 0) {
+            return res;
+        }
+        int start = nums[0];
+        int curr = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != curr + 1) {
+                if (start == curr) {
+                    res.add(String.valueOf(start));
+                } else {
+                    res.add(start + "->" + curr);
+                }
+                start = nums[i];
+            }
+            curr = nums[i];
+        }
+        if (start == curr) {
+            res.add(String.valueOf(start));
+        } else {
+            res.add(start + "->" + curr);
+        }
+        return res;
     }
 
     /**
@@ -2970,6 +3020,33 @@ public class Solution {
             sb.append(" ").append(new StringBuilder(str).reverse());
         }
         return sb.toString().substring(1);
+    }
+
+    /**
+     * 605. 种花问题
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int count = 1;
+        int ans = 0;
+        for (int value : flowerbed) {
+            if (value == 0) {
+                count++;
+            } else {
+                ans += (count - 1) / 2;
+                if (ans >= n) {
+                    return true;
+                }
+                count = 0;
+            }
+        }
+        if (flowerbed[flowerbed.length - 1] == 0) {
+            ans += count / 2;
+            return ans >= n;
+        }
+        return false;
     }
 
     /**
