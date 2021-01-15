@@ -4013,6 +4013,47 @@ public class Solution {
     }
 
     /**
+     * 947. 移除最多的同行或同列石头
+     * @param stones
+     * @return
+     */
+    public int removeStones(int[][] stones) {
+        this.map947 = new HashMap<>();
+        this.count947 = 0;
+        for (int[] stone : stones) {
+            union(stone[0] + 10000, stone[1]);
+        }
+        return stones.length - this.count947;
+    }
+
+    private Map<Integer, Integer> map947;
+
+    private int count947;
+
+    private int find(int x) {
+        if (!this.map947.containsKey(x)) {
+            this.map947.put(x, x);
+            this.count947++;
+        }
+
+        if (x != this.map947.get(x)) {
+            this.map947.put(x, find(this.map947.get(x)));
+        }
+        return this.map947.get(x);
+    }
+
+    private void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX == rootY) {
+            return;
+        }
+
+        this.map947.put(rootX, rootY);
+        this.count947--;
+    }
+
+    /**
      * 973. 最接近原点的 K 个点
      * @param points
      * @param K
