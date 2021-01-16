@@ -3495,6 +3495,27 @@ public class Solution {
     }
 
     /**
+     * 803. 打砖块
+     * @param grid
+     * @param hits
+     * @return
+     */
+    public int[] hitBricks(int[][] grid, int[][] hits) {
+        int[][] copy = new int[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                copy[i][j] = grid[i][j];
+            }
+        }
+
+        for (int[] hit : hits) {
+            copy[hit[0]][hit[1]] = 0;
+        }
+        // TODO
+        return null;
+    }
+
+    /**
      * 830. 较大分组的位置
      * @param s
      * @return
