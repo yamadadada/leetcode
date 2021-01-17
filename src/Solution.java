@@ -4482,6 +4482,31 @@ public class Solution {
     }
 
     /**
+     * 1232. 缀点成线
+     * @param coordinates
+     * @return
+     */
+    public boolean checkStraightLine(int[][] coordinates) {
+        if (coordinates.length == 2) {
+            return true;
+        }
+        int deltaX = coordinates[0][0];
+        int deltaY = coordinates[0][1];
+        for (int[] coordinate : coordinates) {
+            coordinate[0] -= deltaX;
+            coordinate[1] -= deltaY;
+        }
+        int a = coordinates[1][0];
+        int b = coordinates[1][1];
+        for (int i = 2; i < coordinates.length; i++) {
+            if (a * coordinates[i][1] - b * coordinates[i][0] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * 1356. 根据数字二进制下 1 的数目排序
      * @param arr
      * @return
