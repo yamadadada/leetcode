@@ -4272,6 +4272,24 @@ public class Solution {
     }
 
     /**
+     * 989. 数组形式的整数加法
+     * @param A
+     * @param K
+     * @return
+     */
+    public List<Integer> addToArrayForm(int[] A, int K) {
+        List<Integer> res = new ArrayList<>();
+        for (int i = A.length - 1; i >= 0 || K > 0; --i, K /= 10) {
+            if (i >= 0) {
+                K += A[i];
+            }
+            res.add(K % 10);
+        }
+        Collections.reverse(res);
+        return res;
+    }
+
+    /**
      * 1002. 查找常用字符
      * @param A
      * @return
