@@ -13,6 +13,7 @@ public class Solution697 {
      * @return
      */
     public int findShortestSubArray(int[] nums) {
+        int maxSize = 0;
         Map<Integer, List<Integer>> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             if (map.containsKey(nums[i])) {
@@ -22,11 +23,11 @@ public class Solution697 {
                 list.add(i);
                 map.put(nums[i], list);
             }
+            maxSize = Math.max(maxSize, map.get(nums[i]).size());
         }
-        int maxSize = 0;
         int minAns = Integer.MAX_VALUE;
         for (int key : map.keySet()) {
-            if (map.get(key).size() > maxSize) {
+            if (map.get(key).size() == maxSize) {
                 List<Integer> list = map.get(key);
                 maxSize = list.size();
                 minAns = Math.min(minAns, list.get(list.size() - 1) - list.get(0) + 1);
