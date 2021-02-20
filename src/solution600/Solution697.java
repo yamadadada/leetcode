@@ -24,14 +24,21 @@ public class Solution697 {
             }
         }
         int maxSize = 0;
-        int ans = 0;
+        int minAns = Integer.MAX_VALUE;
         for (int key : map.keySet()) {
             if (map.get(key).size() > maxSize) {
                 List<Integer> list = map.get(key);
                 maxSize = list.size();
-                ans = list.get(list.size() - 1) - list.get(0) + 1;
+                minAns = Math.min(minAns, list.get(list.size() - 1) - list.get(0) + 1);
             }
         }
-        return ans;
+        return minAns;
+    }
+
+    public static void main(String[] args) {
+        Solution697 solution = new Solution697();
+        int[] nums = {1, 2, 2, 3, 1};
+        int ans = solution.findShortestSubArray(nums);
+        System.out.println(ans);
     }
 }
