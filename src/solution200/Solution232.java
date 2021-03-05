@@ -24,8 +24,10 @@ public class Solution232 {
         /** Removes the element from in front of queue and returns that element. */
         public int pop() {
             if (outputStack.empty()) {
-                int x = inputStack.pop();
-                outputStack.push(x);
+                while (!inputStack.empty()) {
+                    int x = inputStack.pop();
+                    outputStack.push(x);
+                }
             }
             return outputStack.pop();
         }
@@ -33,8 +35,10 @@ public class Solution232 {
         /** Get the front element. */
         public int peek() {
             if (outputStack.empty()) {
-                int x = inputStack.pop();
-                outputStack.push(x);
+                while (!inputStack.empty()) {
+                    int x = inputStack.pop();
+                    outputStack.push(x);
+                }
             }
             return outputStack.peek();
         }
